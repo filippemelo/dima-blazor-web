@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Categories;
 
@@ -16,9 +17,10 @@ public class CreateCategoryEndpoint : IEndpoint
             .WithOrder(1)
             .Produces<Response<Category?>>();
 
-    private static async Task<IResult> HandleAsync(ICategoryHandler handler, CreateCategoryRequest request)
+    private static async Task<IResult> HandleAsync(
+        ClaimsPrincipal user, ICategoryHandler handler, CreateCategoryRequest request)
     {
-        request.UserId = "teste@blazor.com";
+        request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.CreateAsync(request);
 
         return result.IsSuccess

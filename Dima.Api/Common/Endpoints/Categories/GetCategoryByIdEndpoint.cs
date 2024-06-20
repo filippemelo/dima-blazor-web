@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Categories;
 
@@ -16,12 +17,12 @@ public class GetCategoryByIdEndpoint : IEndpoint
             .WithOrder(4)
             .Produces<Response<Category?>>();
 
-    private static async Task<IResult> HandleAsync(ICategoryHandler handler, long id)
+    private static async Task<IResult> HandleAsync(ClaimsPrincipal user, ICategoryHandler handler, long id)
     {
         var request = new GetCategoryByIdRequest
         {
             Id = id,
-            UserId = "teste@blazor.com"
+            UserId = user.Identity?.Name ?? string.Empty
         };
         var result = await handler.GetByIdAsync(request);
 
