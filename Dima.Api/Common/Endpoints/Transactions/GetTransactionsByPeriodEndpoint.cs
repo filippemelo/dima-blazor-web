@@ -5,7 +5,6 @@ using Dima.Core.Responses;
 using Dima.Core;
 using Microsoft.AspNetCore.Mvc;
 using Dima.Core.Requests.Transactions;
-using Dima.Api.Models;
 using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Transactions;
