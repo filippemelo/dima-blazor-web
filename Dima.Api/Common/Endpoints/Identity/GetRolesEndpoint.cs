@@ -1,6 +1,5 @@
 ﻿using Dima.Api.Common.Api;
-using Dima.Api.Models;
-using Microsoft.AspNetCore.Identity;
+using Dima.Core.Models.Account;
 using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Identity;
@@ -17,13 +16,13 @@ public class GetRolesEndpoint : IEndpoint
 
         var identity = (ClaimsIdentity)user.Identity;
         var roles = identity.FindAll(identity.RoleClaimType)
-             .Select(c => new
+             .Select(c => new RoleClaim
              {
-                 c.Issuer,
-                 c.OriginalIssuer,
-                 c.Type,
-                 c.Value,
-                 c.ValueType
+                 Issuer = c.Issuer,
+                 OriginalIssuer = c.OriginalIssuer,
+                 Type = c.Type,
+                 Value = c.Value,
+                 ValueType = c.ValueType
              });
 
 
